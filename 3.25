@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>3.25作业</title>
+    <style >
+    @keyframes photoshow
+    {
+    	0%{background-image:url(1.jpg) ;
+            background-position:-400px,0px;
+            opacity: 0}
+        5%{
+            background-image: url(1.jpg);
+            background-position: 0px,0px;
+            opacity: 1.0
+        }
+        10%{background-image:url(1.jpg) ;
+            background-position:-400px,0px;
+            opacity: 0;
+            background-image:url(2.jpg) ;
+            background-position:-400px,0px;
+            opacity: 0}
+        15%{
+            background-image: url(2.jpg);
+            background-position: 0px,0px;
+            opacity: 1.0;
+        }
+        20%{background-image:url(2.jpg) ;
+            background-position:-400px,0px;
+            opacity: 0;
+            background-image:url(3.jpg) ;
+            background-position:-400px,0px;
+            opacity: 0}
+        25%{
+            background-image: url(3.jpg);
+            background-position: 0px,0px;
+            opacity: 1.0;
+        }
+        30%{background-image:url(3.jpg) ;
+            background-position:-400px,0px;
+            opacity: 0;
+            background-image:url(4.jpg) ;
+            background-position:-400px,0px;
+            opacity: 0}
+        35%{
+            background-image: url(4.jpg);
+            background-position: 0px,0px;
+            opacity: 1.0;
+        }
+        40%{background-image:url(4.jpg) ;
+            background-position:-400px,0px;
+            opacity: 0;
+            background-image:url(5.jpg) ;
+            background-position:-400px,0px;
+            opacity: 0}
+        45%{
+            background-image: url(5.jpg);
+            background-position: 0px,0px;
+            opacity: 1.0;
+        }
+        50%{background-image:url(5.jpg) ;
+            background-position:-400px,0px;
+            opacity: 0;
+            background-image:url(6.jpg) ;
+            background-position:-400px,0px;
+            opacity: 0}
+        55%{
+            background-image: url(6.jpg);
+            background-position: 0px,0px;
+            opacity: 1.0;
+        }
+        60%{background-image:url(6.jpg) ;
+            background-position:-400px,0px;
+            opacity: 0;
+            background-image:url(7.jpg) ;
+            background-position:-400px,0px;
+            opacity: 0}
+        65%{
+            background-image: url(7.jpg);
+            background-position: 0px,0px;
+            opacity: 1.0;
+        }
+        70%{background-image:url(7.jpg) ;
+            background-position:-400px,0px;
+            opacity: 0;
+            background-image:url(8.jpg) ;
+            background-position:-400px,0px;
+            opacity: 0}
+        75%{
+            background-image: url(8.jpg);
+            background-position: 0px,0px;
+            opacity: 1.0;
+        }
+        80%{background-image:url(8.jpg) ;
+            background-position:-400px,0px;
+            opacity: 0;
+            background-image:url(9.jpg) ;
+            background-position:-400px,0px;
+            opacity: 0}
+        85%{
+            background-image: url(9.jpg);
+            background-position: 0px,0px;
+            opacity: 1.0;
+        }
+        90%{background-image:url(9.jpg) ;
+            background-position:-400px,0px;
+            opacity: 0;
+            background-image:url(10.jpg) ;
+            background-position:-400px,0px;
+            opacity: 0}
+        95%{
+            background-image: url(10.jpg);
+            background-position: 0px,0px;
+            opacity: 1.0;
+        }
+        100%{background-image:url(10.jpg) ;
+            background-position:-400px,0px;
+            opacity: 0}
+
+}
+
+
+    
+
+    #img1{
+    	width: 400px;
+        height: 260px;
+        animation: photoshow  100s infinite;
+        background-repeat: no-repeat;
+    }
+ 
+
+    </style>
+</head>
+<body>
+    <div id="img1"></div>
+
+
+</body>
+</html>
