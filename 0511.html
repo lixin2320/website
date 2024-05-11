@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>汉诺塔问题</title>
+    <style>
+        canvas {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="hanoiCanvas" width="1000" height="450"></canvas>
+    <br>
+    <label for="numDisks">选择圆盘数量：</label>
+    <select id="numDisks">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3" selected>3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+    </select>
+    <button onclick="startGame()">开始游戏</button>
+    <button onclick="pauseGame()">暂停游戏</button>
+    <button onclick="resumeGame()">恢复游戏</button>
+    <br>
+    <label for="speed">选择速度：</label>
+    <select id="speed">
+        <option value="1000">慢</option>
+        <option value="500" selected>中</option>
+        <option value="100">快</option>
+    </select>
+
+    <script>
+        const canvas = document.getElementById('hanoiCanvas');
+        const ctx = canvas.getContext('2d');
+        const diskCountSelect = document.getElementById('numDisks');
+        const speedSelect = document.getElementById('speed');
+
+        const towerWidth = 20; // 柱子宽度调整为 20
+        const towerHeight = 180;
+        const diskHeight = 20;
+        const diskIncrement = 20;
+        let towers = [[], [], []];
+        let isAnimating = false;
+        let steps = [];
+        let currentStep = 0;
+        let animationInterval;
+
+        function initGame() {
+            towers = [[], [], []];
+            steps = [];
+            for (let i = 0; i < diskCountSelect.value; i++) {
+                towers[0].push({
+                    width: (diskCountSelect.value - i) * diskIncrement + 60,
+                    height: diskHeight,
+                    color: `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`
+                });
+            }
+            draw();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i <= 2; i++) {
+                ctx.fillStyle = 'black';
+                ctx.fillRect(200 + 200 * i - towerWidth / 2, canvas.height - towerHeight, towerWidth, towerHeight);
+            }
+            for (let i = 0; i < 3; i++) {
+                const tower = towers[i];
+                for (let j = 0; j < tower.length; j++) {
+                    const disk = tower[j];
+                    ctx.fillStyle = disk.color;
+                    ctx.fillRect(200 + 200 * i - disk.width / 2, canvas.height - (j + 1) * diskHeight, disk.width, disk.height);
+                }
+            }
+            ctx.font = '20px Arial';
+            ctx.fillStyle = 'black';
+            ctx.textAlign = 'center';
+            ctx.fillText('A', 200, canvas.height - towerHeight);
+            ctx.fillText('B', 400, canvas.height - towerHeight);
+            ctx.fillText('C', 600, canvas.height - towerHeight);
+        }
+
+        function moveDisk(source, target) {
+            if (towers[target].length > 0 && towers[target][towers[target].length - 1].width < towers[source][towers[source].length - 1].width) {
+                return false;
+            }
+            towers[target].push(towers[source].pop());
+            return true;
+        }
+
+        function generateHanoiSteps(n, source, target, auxiliary) {
+            if (n === 1) {
+                steps.push([source, target]);
+            } else {
+                generateHanoiSteps(n - 1, source, auxiliary, target);
+                steps.push([source, target]);
+                generateHanoiSteps(n - 1, auxiliary, target, source);
+            }
+        }
+
+        function checkGameEnd() {
+            // 检查第三个柱子上是否有所有的圆盘
+            return towers[2].length === parseInt(diskCountSelect.value);
+        }
+
+        function animateHanoi(speed) {
+            if (isAnimating) {
+                return;
+            }
+            isAnimating = true;
+            animationInterval = setInterval(() => {
+                if (currentStep === steps.length || checkGameEnd()) {
+                    clearInterval(animationInterval);
+                    isAnimating = false;
+                    alert('游戏结束');
+                }
+                const [source, target] = steps[currentStep];
+                moveDisk(source, target);
+                draw();
+                currentStep++;
+            }, speed);
+        }
+
+        function startGame() {
+            if (steps.length === 0) {
+                if (diskCountSelect.value === '1') {
+                    steps.push([0, 2]); // 直接将步骤设置为将圆盘从源柱子移动到目标柱子
+                } else {
+                    generateHanoiSteps(diskCountSelect.value, 0, 2, 1);
+                }
+            }
+            currentStep = 0;
+            animateHanoi(speedSelect.value);
+        }
+
+        function pauseGame() {
+            if (isAnimating) {
+                clearInterval(animationInterval);
+                isAnimating = false;
+            }
+        }
+
+        function resumeGame() {
+            if (!isAnimating) {
+                animateHanoi(speedSelect.value);
+            }
+        }
+
+        diskCountSelect.addEventListener('change', (event) => {
+            initGame();
+        });
+
+        speedSelect.addEventListener('change', (event) => {
+            if (isAnimating) {
+                pauseGame();
+                animateHanoi(speedSelect.value);
+            }
+        });
+
+        initGame();
+    </script>
+</body>
+</html>
